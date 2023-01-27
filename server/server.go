@@ -36,5 +36,5 @@ func HandleConnection(conn net.Conn) {
 	}
 
 	// serve quote or disconnect if pow invalid
-	conn.Write([]byte(quotes[rand.Intn(len(quotes)-1)]))
+	conn.Write([]byte(quotes[rand.Intn(len(quotes))]))
 }
