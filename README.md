@@ -25,3 +25,5 @@ This will generate an error and terminate the connection. Thus, the situation of
 For testing Server:
 
 `nc localhost 8080`
+
+![PoW protection schema](schema.png)
