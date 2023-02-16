@@ -9,6 +9,7 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -60,6 +61,8 @@ func calculateHash(block Block) string {
 }
 
 func CreateBlock(conn Connection) (Block, error) {
+	m.Lock()
+	defer m.Unlock()
 	return createNewBlock(Blockchain[len(Blockchain)-1], conn)
 }
 
@@ -103,6 +106,8 @@ func isHashValid(hash string, difficulty int) bool {
 	return strings.HasPrefix(hash, prefix)
 }
 
+var m *sync.Mutex
+
 func GenesisBlock() {
 	Blockchain = append(Blockchain, Block{
 		Index:      0,
@@ -113,6 +118,8 @@ func GenesisBlock() {
 		Difficulty: difficulty,
 		Nonce:      "",
 	})
+
+	m = new(sync.Mutex)
 
 	log.Println("Genesis block created:")
 	spew.Dump(Blockchain[0])
